@@ -3,11 +3,17 @@
 
 Name:           python-%{pypi_name}
 Version:        0.4.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        XML bomb protection for Python stdlib modules
 License:        Python
 URL:            https://bitbucket.org/tiran/defusedxml
 Source0:        http://pypi.python.org/packages/source/d/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=927883#c14
+Patch0:         %{name}-entity_loop.patch
+Patch1:         %{name}-format_strings.patch
+
+
 BuildArch:      noarch
 
 BuildRequires:  python2-devel
@@ -40,6 +46,9 @@ module.
 
 %prep
 %setup -q -n %{pypi_name}-%{version}
+%patch0 -p1
+%patch1 -p1
+
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
@@ -83,6 +92,10 @@ popd
 %endif # with_python3
 
 %changelog
+* Wed Aug 05 2015 Miro Hrončok <mhroncok@redhat.com> - 0.4.1-4
+- Add patches by Avram Lubkin
+- https://bugzilla.redhat.com/show_bug.cgi?id=927883#c14
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
