@@ -1,4 +1,4 @@
-%global with_python3 1
+%global with_python3 0
 %global pypi_name defusedxml
 
 Name:           python-%{pypi_name}
