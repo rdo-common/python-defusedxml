@@ -1,5 +1,8 @@
 %global with_python3 0
 %global pypi_name defusedxml
+# define the license macro as doc if licensedir is not defined for
+# compatibility with EPEL
+%{!?_licensedir:%global license %%doc}
 
 Name:           python-%{pypi_name}
 Version:        0.4.1
