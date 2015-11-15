@@ -3,7 +3,7 @@
 
 Name:           python-%{pypi_name}
 Version:        0.4.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        XML bomb protection for Python stdlib modules
 License:        Python
 URL:            https://bitbucket.org/tiran/defusedxml
@@ -13,19 +13,28 @@ Source0:        http://pypi.python.org/packages/source/d/%{pypi_name}/%{pypi_nam
 Patch0:         %{name}-entity_loop.patch
 Patch1:         %{name}-format_strings.patch
 
-
 BuildArch:      noarch
 
 BuildRequires:  python2-devel
-BuildRequires:  python-setuptools
+BuildRequires:  python2-setuptools
 
 %if 0%{with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 %endif
 
-
 %description
+The defusedxml package contains several Python-only workarounds and fixes for
+denial of service and other vulnerabilities in Python's XML libraries. In order
+to benefit from the protection you just have to import and use the listed
+functions / classes from the right defusedxml module instead of the original
+module.
+
+%package -n python2-%{pypi_name}
+Summary:        XML bomb protection for Python stdlib modules
+%{?python_provide:%python_provide python2-%{pypi_name}}
+
+%description -n python2-%{pypi_name}
 The defusedxml package contains several Python-only workarounds and fixes for
 denial of service and other vulnerabilities in Python's XML libraries. In order
 to benefit from the protection you just have to import and use the listed
@@ -35,6 +44,7 @@ module.
 %if 0%{?with_python3}
 %package -n python3-%{pypi_name}
 Summary:        XML bomb protection for Python stdlib modules
+%{?python_provide:%python_provide python3-%{pypi_name}}
 
 %description -n python3-%{pypi_name}
 The defusedxml package contains several Python-only workarounds and fixes for
@@ -46,7 +56,9 @@ module.
 
 %prep
 %setup -q -n %{pypi_name}-%{version}
+%if 0%{?rhel}
 %patch0 -p1
+%endif
 %patch1 -p1
 
 %if 0%{?with_python3}
@@ -79,19 +91,25 @@ pushd %{py3dir}
 popd
 %endif # with_python3
 
-%files
-%doc README.txt README.html LICENSE CHANGES.txt
-%{python_sitelib}/%{pypi_name}
-%{python_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
+%files -n python2-%{pypi_name}
+%doc README.txt README.html CHANGES.txt
+%license LICENSE
+%{python2_sitelib}/%{pypi_name}
+%{python2_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %if 0%{?with_python3}
 %files -n python3-%{pypi_name}
-%doc README.txt README.html LICENSE CHANGES.txt
+%doc README.txt README.html CHANGES.txt
+%license LICENSE
 %{python3_sitelib}/%{pypi_name}
 %{python3_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 %endif # with_python3
 
 %changelog
+* Sun Nov 15 2015 Ralph Bean <rbean@redhat.com> - 0.4.1-6
+- Added explicit python2 subpackage with modern provides statement.
+- Only apply the entity_loop patch on enterprisey builds.
+
 * Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
 
