@@ -3,7 +3,7 @@
 
 Name:           python-%{pypi_name}
 Version:        0.4.1
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        XML bomb protection for Python stdlib modules
 License:        Python
 URL:            https://bitbucket.org/tiran/defusedxml
@@ -106,6 +106,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.4.1-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Sun Nov 15 2015 Ralph Bean <rbean@redhat.com> - 0.4.1-6
 - Added explicit python2 subpackage with modern provides statement.
 - Only apply the entity_loop patch on enterprisey builds.
