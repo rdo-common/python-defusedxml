@@ -3,7 +3,7 @@
 
 Name:           python-%{pypi_name}
 Version:        0.4.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        XML bomb protection for Python stdlib modules
 License:        Python
 URL:            https://bitbucket.org/tiran/defusedxml
@@ -106,6 +106,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.1-8
+- https://fedoraproject.org/wiki/Changes/Automatic_Provides_for_Python_RPM_Packages
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 0.4.1-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
