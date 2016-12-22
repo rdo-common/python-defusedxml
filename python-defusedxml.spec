@@ -6,12 +6,20 @@ Version:        0.4.1
 Release:        9%{?dist}
 Summary:        XML bomb protection for Python stdlib modules
 License:        Python
+# Note: upstream git now appears to be at https://github.com/tiran/defusedxml
+# not bitbucket as pypi says
 URL:            https://bitbucket.org/tiran/defusedxml
 Source0:        http://pypi.python.org/packages/source/d/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=927883#c14
 Patch0:         %{name}-entity_loop.patch
 Patch1:         %{name}-format_strings.patch
+# This is https://github.com/tiran/defusedxml/commit/1d342237b560e29e8401d0a22a776b52b09e0ae2
+# rediffed on 0.4.1 . It doesn't really fix anything, but is necessary
+# for the real fix to apply without rediffing.
+Patch2:         %{name}-python36-broken.patch
+# Real fix for Python 3.6: https://github.com/tiran/defusedxml/pull/4
+Patch3:         0001-Fully-fix-iterparse-defusing-on-Python-3.6.patch
 
 BuildArch:      noarch
 
@@ -60,6 +68,8 @@ module.
 %patch0 -p1
 %endif
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %if 0%{?with_python3}
 rm -rf %{py3dir}
@@ -106,7 +116,10 @@ popd
 %endif # with_python3
 
 %changelog
-* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 0.4.1-9
+* Thu Dec 22 2016 Adam Williamson <awilliam@redhat.com> - 0.4.1-9
+- Fix incompatibility with Python 3.6 (gh#3 / gh#4)
+
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com>
 - Rebuild for Python 3.6
 
 * Tue Jul 19 2016 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.1-8

@@ -1,0 +1,22 @@
+From 1d342237b560e29e8401d0a22a776b52b09e0ae2 Mon Sep 17 00:00:00 2001
+From: Christian Heimes <christian@python.org>
+Date: Wed, 24 Aug 2016 10:08:34 +0200
+Subject: [PATCH] Python 3.6 no _IterParseIterator class
+
+---
+ defusedxml/ElementTree.py | 2 +-
+ 1 files changed, 1 insertions(+), 1 deletion(-)
+
+diff --git a/defusedxml/ElementTree.py b/defusedxml/ElementTree.py
+index a2f1f58..8c46064 100644
+--- a/defusedxml/ElementTree.py
++++ b/defusedxml/ElementTree.py
+@@ -49,7 +49,7 @@ def _get_py3_cls():
+ 
+     _XMLParser = pure_pymod.XMLParser
+     _iterparse = pure_pymod.iterparse
+-    if PY31:
++    if PY31 or sys.version_info >= (3, 6):
+         _IterParseIterator = None
+         from xml.parsers.expat import ExpatError as ParseError
+     else:
