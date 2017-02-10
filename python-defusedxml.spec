@@ -24,7 +24,7 @@ Patch3:         0001-Fully-fix-iterparse-defusing-on-Python-3.6.patch
 BuildArch:      noarch
 
 BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
+BuildRequires:  python-setuptools
 
 %if 0%{with_python3}
 BuildRequires:  python3-devel
