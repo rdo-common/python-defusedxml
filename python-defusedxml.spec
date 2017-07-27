@@ -14,7 +14,7 @@
 
 Name:           python-%{pypi_name}
 Version:        0.5.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        XML bomb protection for Python stdlib modules
 License:        Python
 URL:            https://github.com/tiran/defusedxml
@@ -130,6 +130,9 @@ module. This is the python%{python3_other_pkgversion} build.
 %endif # with_python3
 
 %changelog
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.5.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Fri Feb 10 2017 Adam Williamson <awilliam@redhat.com> - 0.5.0-1
 - Update to 0.5.0, drop merged/superseded patches
 - Enable Python 3 build for EPEL 7, per https://fedoraproject.org/wiki/PackagingDrafts:Python3EPEL
