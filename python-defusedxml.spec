@@ -1,10 +1,8 @@
-# Enable Python 3 builds for Fedora + EPEL >6
-%if 0%{?fedora} || 0%{?rhel} > 6
-# If the definition isn't available for python3_pkgversion, define it
+%if 0%{?fedora} >= 24
+%global with_python3 1
 %{?!python3_pkgversion:%global python3_pkgversion 3}
-%bcond_without  python3
 %else
-%bcond_with     python3
+%global with_python3 0
 %endif
 
 %global pypi_name defusedxml
